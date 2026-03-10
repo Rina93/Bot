@@ -13,7 +13,7 @@ from telegram.ext import (
 )
 
 # Настройки
-TOKEN = '7907821821:AAFZPXf5Xw9wFRrXt630Ud-IM7vmv7YvoZc'
+TOKEN = ''
 DATA_USERS = 'data/users.json'
 DATA_SUBMISSIONS = 'data/submissions.json'
 
