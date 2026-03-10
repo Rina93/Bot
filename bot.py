@@ -12,12 +12,12 @@ from telegram.ext import (
     JobQueue
 )
 
-# === Настройки ===
-TOKEN = '7907821821:AAFZPXf5Xw9wFRrXt630Ud-IM7vmv7YvoZc'  # Заменить на свой токен
+# Настройки
+TOKEN = '7907821821:AAFZPXf5Xw9wFRrXt630Ud-IM7vmv7YvoZc'
 DATA_USERS = 'data/users.json'
 DATA_SUBMISSIONS = 'data/submissions.json'
 
-# === Функции работы с данными ===
+# Функции работы с данными
 def load_users():
     if not os.path.exists(DATA_USERS):
         return {}
@@ -38,7 +38,7 @@ def save_submissions(submissions):
     with open(DATA_SUBMISSIONS, 'w', encoding='utf-8') as f:
         json.dump(submissions, f, ensure_ascii=False, indent=4)
 
-# === Генератор тем ===
+# Генератор тем
 def generate_theme():
     themes = ["Природа", "Космос", "Город", "Магия", "Технологии"]
     if random.random() < 0.5:
@@ -46,7 +46,7 @@ def generate_theme():
     else:
         return f"{random.choice(themes)} + {random.choice(themes)}"
 
-# === Мотивационные фразы ===
+# Мотивационные фразы
 def get_motivation():
     return random.choice([
         "Не бойся ошибаться — бойся не пробовать.",
@@ -91,7 +91,7 @@ def send_reference(update: Update, context: CallbackContext):
         update.message.reply_text("Ошибка при загрузке референса.")
         print(e)
 
-# === Команды ===
+# Команды
 def start(update: Update, context: CallbackContext):
     update.message.reply_text("Привет! Я Владыка Красок 🎨\n"
                               "Регистрируйся командой /reg [имя]")
@@ -188,7 +188,7 @@ def done(update: Update, context: CallbackContext):
     save_users(users)
     update.message.reply_text("✅ Задание отмечено выполненным! Ваш рейтинг повышен.")
 
-# === Расписание заданий ===
+# Расписание заданий
 def send_task(context: CallbackContext):
     theme = generate_theme()
     users = load_users()
@@ -225,7 +225,7 @@ def setup_scheduler(dp: JobQueue):
     dp.run_daily(send_task, datetime.time(hour=12, minute=0), days=(4,))  # Пятница
     dp.run_daily(check_debtors, datetime.time(hour=18, minute=0), days=(6,))  # Воскресенье
 
-# === Запуск бота ===
+# Запуск бота
 def main():
     updater = Updater(TOKEN, use_context=True)
     dp = updater.dispatcher
